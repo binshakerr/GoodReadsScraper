@@ -22,6 +22,15 @@ def scrape_quotes(url):
         details = {}
         details["quote"] = quoteText.split("―")[0].strip()
         details["author"] = quoteText.split("―")[1].strip()
+
+        tags_container = quote.find("div", class_="smallText")
+        try:
+            tag_links = tags_container.find_all("a")
+            tag_list = [x.text for x in tag_links]
+            details["tags"] = ", ".join(tag_list)
+        except:
+            pass 
+        
         results.append(details)
     
     return results
